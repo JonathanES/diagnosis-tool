@@ -4,8 +4,7 @@ import createSagaMiddleware from 'redux-saga';
 import reducers from '../reducers';
 import diagnosisSaga from '../sagas/diagnosisSaga';
 import symptomSaga from '../sagas/symptomSaga';
-//import milestoneSaga from '../sagas/milestoneSaga';
-
+import reportSaga from '../sagas/reportSaga';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -24,6 +23,6 @@ const enhancer = compose(
 export const store = createStore(reducers, enhancer);
 
 //Load sagas based on router context
-[diagnosisSaga, symptomSaga].map(saga => sagaMiddleware.run(saga));
+[diagnosisSaga, symptomSaga, reportSaga].map(saga => sagaMiddleware.run(saga));
 
 export default store;

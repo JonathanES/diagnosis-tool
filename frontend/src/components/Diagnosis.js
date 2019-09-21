@@ -40,6 +40,7 @@ class Symptom extends Component {
               }).then(async response => {
                 response = await response.json();
                 console.log(response.data);
+                this.props.dispatch({type: 'USER_REPORT', report: response.data})
               }).catch(err => {
                 console.log(err);
               })
