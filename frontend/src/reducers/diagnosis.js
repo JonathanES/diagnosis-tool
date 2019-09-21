@@ -1,7 +1,8 @@
 const defaultState = {
   displayDiagnosis: false,
   mostLikelyDiagnosis: '',
-  listDiagnosis: []
+  listDiagnosis: [],
+  displayListDiagnosis: false
 };
 
 const diagnosis = (state = defaultState, action) => {
@@ -13,6 +14,11 @@ const diagnosis = (state = defaultState, action) => {
         mostLikelyDiagnosis: action.mostLikelyDiagnosis,
         listDiagnosis: action.listDiagnosis
       };
+    case 'DISPLAY_LIST_DIAGNOSIS_DEMAND':
+      return {
+        ...state,
+        displayListDiagnosis: !state.displayListDiagnosis
+      }
     case "DISPLAY_DIAGNOSIS_DEMAND":
       return {
         ...state,
