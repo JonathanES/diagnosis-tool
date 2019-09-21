@@ -4,6 +4,12 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const symptoms = require('./backend/business-management/symptoms');
+
+/**
+ * initiate the local variable
+ */
+symptoms.getAllSymptomsInformation();
 
 /**
  *  files required

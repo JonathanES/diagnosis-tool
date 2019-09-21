@@ -1,30 +1,29 @@
 const bmSymptoms = require('../data-access/symptoms.js');
 
-function getAllSymptomsInformation(){
-    return new Promise(async (resolve, reject) => {
-        const symptoms = await bmSymptoms.getAllSymptoms()
-        resolve(symptoms);
-    })
+let SYMPTOMS_INFORMATION = {};
+
+async function getAllSymptomsInformation(){
+    SYMPTOMS_INFORMATION = await bmSymptoms.getAllSymptoms();
 }
 
 async function getAllSymptoms(req, res, next){
-    const symptoms = await getAllSymptomsInformation();
     res.status(200)
         .json({
             status: 'success',
-            data: Object.keys(symptoms),
+            data: Object.keys(SYMPTOMS_INFORMATION),
             message: 'Retrieved all symptoms'
         });
 }
 
 async function getSymtomDiagnosis(req, res, next){
-    const symptoms = await getAllSymptomsInformation();
     const symptom = req.params.symptom;
-    if (Object.keys(symptoms).includes(symptom)){
+    if (Object.keys(SYMPTOMS_INFORMATION).includes(symptom)){
+        let val = SYMPTOMS_INFORMATION[symptom];
+        val = Object.keys(val).sort((a,b) => {return val[b] - val[a]})
         res.status(200)
         .json({
             status: 'success',
-            data: Object.values(symptoms[symptom]),
+            data: val,
             message: 'Retrieved all diagnosis'
         });
     }
@@ -35,8 +34,9 @@ async function getSymtomDiagnosis(req, res, next){
             message: 'not found'
         })
     }
-    
 }
+
+
 
 module.exports = {
     getAllSymptomsInformation: getAllSymptomsInformation,

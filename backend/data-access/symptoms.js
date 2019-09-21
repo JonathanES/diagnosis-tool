@@ -10,7 +10,12 @@ function getAllSymptoms() {
             let res = {}
             for (line of data){
                 line = line.split(", ")
-                res[line[0]] = line.slice(1);
+                let diagnosis = {};
+                const tmp = line.slice(1);
+                for (elt of tmp){
+                    diagnosis[[elt]] = 0;
+                }
+                res[line[0]] = diagnosis;
             }
             resolve(res);
         });
