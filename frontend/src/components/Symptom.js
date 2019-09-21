@@ -3,9 +3,6 @@ import Form from 'react-bootstrap/Form';
 
 
 class Symptom extends Component {
-    static propTypes = {
-    };
-
     constructor(props) {
         super(props);
         this.state = {
@@ -14,7 +11,7 @@ class Symptom extends Component {
             listDiagnosis: []
         };
 
-        this.handleChange = this.handleChange.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
 
     componentDidMount() {
@@ -23,12 +20,15 @@ class Symptom extends Component {
             .then(symptoms => this.setState({ symptoms: symptoms.data, value: symptoms.data[0] }));
     }
 
-    handleChange(event) {
-        const val = event.targget.value;
+    handleClick(event) {
+        const val = event.target.value;
         fetch('/api/diagnosis/' + val)
             .then(response => response.json())
-            .then(diagnosis => this.setState({ mostLikelyDiagnosis: diagnosis.data[0], listDiagnosis: diagnosis.data.slice(1) }));;
-        this.props.dispatch({ type: 'USER_MOST_LIKELY_DIAGNOSIS_DEMAND', mostLikelyDiagnosis: this.state.mostLikelyDiagnosis, listDiagnosis: this.state.listDiagnosis});
+            .then(diagnosis => this.setState({
+                mostLikelyDiagnosis: diagnosis.data[0],
+                listDiagnosis: diagnosis.data.slice(1)
+            },
+            () => this.props.dispatch({ type: 'USER_MOST_LIKELY_DIAGNOSIS_DEMAND', mostLikelyDiagnosis: diagnosis.data[0], listDiagnosis:diagnosis.data.slice(1) })))
     }
 
     render() {
@@ -36,10 +36,10 @@ class Symptom extends Component {
             <Form>
                 <Form.Group controlId="exampleForm.ControlSelect1">
                     <Form.Label>Example select</Form.Label>
-                    <Form.Control as="select" onChange={e => this.handleChange(e)}>
+                    <Form.Control as="select" onClick={e => this.handleClick(e)}>
                         {
                             this.state.symptoms.map(symptom => (
-                                <option>{symptom}</option>
+                                <option key={symptom}>{symptom}</option>
                             ))
                         }
                     </Form.Control>
