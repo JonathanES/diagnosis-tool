@@ -17,7 +17,8 @@ class Symptom extends Component {
     componentDidMount() {
         fetch('/api/symptoms')
             .then(response => response.json())
-            .then(symptoms => this.setState({ symptoms: symptoms.data, value: symptoms.data[0] }));
+            .then(symptoms => this.setState({ symptoms: symptoms.data, value: symptoms.data[0] },
+                () => this.props.dispatch({ type: 'USER_SYMPTOM_CHOSEN', symptomChosen: symptoms.data[0] })))
     }
 
     handleClick(event) {
@@ -28,7 +29,11 @@ class Symptom extends Component {
                 mostLikelyDiagnosis: diagnosis.data[0],
                 listDiagnosis: diagnosis.data.slice(1)
             },
-            () => this.props.dispatch({ type: 'USER_MOST_LIKELY_DIAGNOSIS_DEMAND', mostLikelyDiagnosis: diagnosis.data[0], listDiagnosis:diagnosis.data.slice(1) })))
+                () => {
+                    this.props.dispatch({ type: 'USER_MOST_LIKELY_DIAGNOSIS_DEMAND', mostLikelyDiagnosis: diagnosis.data[0], listDiagnosis: diagnosis.data.slice(1) });
+                    this.props.dispatch({ type: 'USER_SYMPTOM_CHOSEN', symptomChosen: val });
+                }
+            ))
     }
 
     render() {

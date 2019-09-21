@@ -2,11 +2,11 @@ const bmSymptoms = require('../data-access/symptoms.js');
 
 let SYMPTOMS_INFORMATION = {};
 
-async function getAllSymptomsInformation(){
+async function getAllSymptomsInformation() {
     SYMPTOMS_INFORMATION = await bmSymptoms.getAllSymptoms();
 }
 
-async function getAllSymptoms(req, res, next){
+async function getAllSymptoms(req, res, next) {
     res.status(200)
         .json({
             status: 'success',
@@ -15,19 +15,19 @@ async function getAllSymptoms(req, res, next){
         });
 }
 
-async function getSymtomDiagnosis(req, res, next){
+async function getSymtomDiagnosis(req, res, next) {
     const symptom = req.params.symptom;
-    if (Object.keys(SYMPTOMS_INFORMATION).includes(symptom)){
+    if (Object.keys(SYMPTOMS_INFORMATION).includes(symptom)) {
         let val = SYMPTOMS_INFORMATION[symptom];
-        val = Object.keys(val).sort((a,b) => {return val[b] - val[a]})
+        val = Object.keys(val).sort((a, b) => { return val[b] - val[a] })
         res.status(200)
-        .json({
-            status: 'success',
-            data: val,
-            message: 'Retrieved all diagnosis'
-        });
+            .json({
+                status: 'success',
+                data: val,
+                message: 'Retrieved all diagnosis'
+            });
     }
-    else{
+    else {
         res.status(404).json({
             status: 'refused',
             data: [],
@@ -36,10 +36,42 @@ async function getSymtomDiagnosis(req, res, next){
     }
 }
 
+function increaseFrequency(req, res, next) {
+    const diagnosis = req.body.diagnosis;
+    const symptom = req.body.symptom;
+    console.log(diagnosis + " " + symptom);
+    if (Object.keys(SYMPTOMS_INFORMATION).includes(symptom)) {
+        let val = SYMPTOMS_INFORMATION[symptom];
+        if (diagnosis in val) {
+            val[diagnosis] += 1
+        }
+        else {
+            res.status(404).json({
+                status: 'refused',
+                data: [],
+                message: 'not found'
+            })
+        }
+        res.status(200)
+            .json({
+                status: 'success',
+                data: val,
+                message: 'Send back report'
+            });
+    }
+    else {
+        res.status(404).json({
+            status: 'refused',
+            data: [],
+            message: 'not found'
+        })
+    }
 
+}
 
 module.exports = {
     getAllSymptomsInformation: getAllSymptomsInformation,
     getAllSymptoms: getAllSymptoms,
-    getSymtomDiagnosis: getSymtomDiagnosis
+    getSymtomDiagnosis: getSymtomDiagnosis,
+    increaseFrequency: increaseFrequency
 }

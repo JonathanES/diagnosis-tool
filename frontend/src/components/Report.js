@@ -6,7 +6,6 @@ import ListGroup from 'react-bootstrap/ListGroup';
 
 
 const mapStateToProps = state => ({
-    symptomChosen: state.symptom.symptomChosen,
     mostLikelyDiagnosis: state.diagnosis.mostLikelyDiagnosis,
     listDiagnosis: state.diagnosis.listDiagnosis
 });
@@ -25,24 +24,8 @@ class Symptom extends Component {
         if (val === "no") {
             this.setState({ displayList: true });
         }
-        else if (val === "yes"){
-            let data = {
-                "diagnosis":this.props.mostLikelyDiagnosis,
-                "symptom": this.props.symptomChosen
-            }
-            fetch("/api/report", {
-                method: 'POST',
-                headers: {
-                  'Accept': 'application/json',
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data)
-              }).then(async response => {
-                response = await response.json();
-                console.log(response.data);
-              }).catch(err => {
-                console.log(err);
-              })
+        else if (val == "yes"){
+            
         }
         console.log(val);
     }

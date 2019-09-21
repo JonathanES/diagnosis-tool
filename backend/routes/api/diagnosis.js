@@ -5,5 +5,5 @@ module.exports = function (app) {
     app.get('/symptoms',symptoms.getAllSymptoms);
     app.get('/diagnosis/:symptom', symptoms.getSymtomDiagnosis);
     // post to retrieve data from portail azure 
-    //app.post('/form', form.post);
+    app.post('/report', symptoms.increaseFrequency);
 };
