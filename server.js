@@ -16,7 +16,7 @@ symptoms.getAllSymptomsInformation();
  * API documentation route
  */
  var swaggerUi = require('swagger-ui-express'),
-    swaggerDocument = require('./swagger.json');
+    swaggerDocument = require('./documentation/swagger.json');
 app.use(cors({credentials: true, origin: 'http://localhost:8080'}));
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
