@@ -33,6 +33,34 @@ async function getAllSymptoms(req, res, next) {
 
 /**
  * 
+ * @param {*} val, object containing diagnosises with their frequencies. 
+ * @param {*} valKeys, the keys of the diagnosises 
+ * 
+ * If two or more diagnoses are equally likely, 
+ * one diagnosis chosen at random from the most likely ones.
+ * pick the first element and swap it with a random index that is also one of the most likely ones.
+ */
+function randomMostLikely(val, valKeys){
+    return new Promise(resolve => {
+        count = 0;
+        for (let i = 1; i < valKeys.length; i++) {
+            if (val[valKeys[i]] == val[valKeys[0]]) 
+                count += 1;
+            else 
+                break;
+        }
+
+        randomIndex = Math.floor(Math.random() * (count - 0 + 1) + 0);
+
+        temporaryValue = valKeys[0];
+        valKeys[0] = valKeys[randomIndex];
+        valKeys[randomIndex] = temporaryValue;
+        resolve(valKeys);
+    })
+}
+
+/**
+ * 
  * @param {*} req 
  * @param {*} res 
  * @param {*} next 
@@ -45,13 +73,16 @@ async function getSymtomDiagnosis(req, res, next) {
     const symptom = req.params.symptom;
     if (Object.keys(SYMPTOMS_INFORMATION).includes(symptom)) {
         let val = SYMPTOMS_INFORMATION[symptom];
-        val = Object.keys(val).sort((a, b) => {
+
+        valKeys = Object.keys(val).sort((a, b) => {
             return val[b] - val[a]
         });
+    
+        valKeys = await randomMostLikely(val, valKeys);
         res.status(constant.SUCCESS_STATUS_NUM)
             .json({
                 status: constant.SUCCESS_STATUS,
-                data: val,
+                data: valKeys,
                 message: constant.GET_SYMPTOM_DIAGNOSIS_MESSAGE_SUCCESS
             });
     }
