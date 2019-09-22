@@ -85,7 +85,7 @@ class Symptom extends Component {
                 <Card>
                     {!this.props.displayListDiagnosis && <Card.Body>
                         <p>
-                            {this.props.mostLikelyDiagnosis}
+                           <u><b>Diagnosis:</b></u> {this.props.mostLikelyDiagnosis}
                         </p>
                         <Button variant="success" id="yes" onClick={e => this.handleClick(e)}>YES</Button>
                         <Button variant="danger" id="no" onClick={e => this.handleClick(e)} >NO</Button>
