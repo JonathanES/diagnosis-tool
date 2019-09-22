@@ -5,11 +5,21 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const symptoms = require('./backend/business-management/symptoms');
+const cors = require('cors');
 
 /**
  * initiate the local variable
  */
 symptoms.getAllSymptomsInformation();
+
+/**
+ * API documentation route
+ */
+ var swaggerUi = require('swagger-ui-express'),
+    swaggerDocument = require('./swagger.json');
+app.use(cors({credentials: true, origin: 'http://localhost:8080'}));
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 /**
  *  files required
