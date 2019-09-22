@@ -5,6 +5,7 @@ import reducers from '../reducers';
 import diagnosisSaga from '../sagas/diagnosisSaga';
 import symptomSaga from '../sagas/symptomSaga';
 import reportSaga from '../sagas/reportSaga';
+import resetSaga from '../sagas/resetSaga';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -23,6 +24,6 @@ const enhancer = compose(
 export const store = createStore(reducers, enhancer);
 
 //Load sagas based on router context
-[diagnosisSaga, symptomSaga, reportSaga].map(saga => sagaMiddleware.run(saga));
+[diagnosisSaga, symptomSaga, reportSaga, resetSaga].map(saga => sagaMiddleware.run(saga));
 
 export default store;

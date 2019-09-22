@@ -24,3 +24,10 @@
 .App-link {
   color: #09d3ac;
 }
+.form-control{
+    cursor: pointer;
+}
+.list-group-item:hover {
+  background-color: #71d1e2;
+  cursor: pointer;
+}

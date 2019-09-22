@@ -25,7 +25,7 @@ class Symptom extends Component {
     handleClick(event) {
         const val = event.target.id;
         if (val === "no") {
-            this.props.dispatch({ type: 'USER_DISPLAY_LIST_DIAGNOSIS_DEMAND', mostLikelyDiagnosis: this.props.mostLikelyDiagnosis, listDiagnosis: this.props.listDiagnosis});
+            this.props.dispatch({ type: 'USER_DISPLAY_LIST_DIAGNOSIS_DEMAND', mostLikelyDiagnosis: this.props.mostLikelyDiagnosis, listDiagnosis: this.props.listDiagnosis });
         }
         else if (val === "yes") {
             let data = {
@@ -53,30 +53,38 @@ class Symptom extends Component {
     handleCardClick(diagnosis) {
         const listDiagnosis = this.props.listDiagnosis;
         const index = listDiagnosis.indexOf(diagnosis);
-        if (index > -1){
-            listDiagnosis.splice(index,1);
+        if (index > -1) {
+            listDiagnosis.splice(index, 1);
             listDiagnosis.push(this.props.mostLikelyDiagnosis);
-            this.props.dispatch({ type: 'USER_DISPLAY_LIST_DIAGNOSIS_DEMAND', mostLikelyDiagnosis: diagnosis, listDiagnosis: listDiagnosis});
+            this.props.dispatch({ type: 'USER_DISPLAY_LIST_DIAGNOSIS_DEMAND', mostLikelyDiagnosis: diagnosis, listDiagnosis: listDiagnosis });
         }
     }
 
     render() {
         return (
-            <Card>
-                {!this.props.displayListDiagnosis && <Card.Body>
-                    <p>
-                        {this.props.mostLikelyDiagnosis}
-                    </p>
-                    <Button variant="success" id="yes" onClick={e => this.handleClick(e)}>YES</Button>
-                    <Button variant="danger" id="no" onClick={e => this.handleClick(e)} >NO</Button>
-                </Card.Body>}
+            <div id="diagnosis">
+                <Card>
+                    {!this.props.displayListDiagnosis && <Card.Body>
+                        <p>
+                            {this.props.mostLikelyDiagnosis}
+                        </p>
+                        <Button variant="success" id="yes" onClick={e => this.handleClick(e)}>YES</Button>
+                        <Button variant="danger" id="no" onClick={e => this.handleClick(e)} >NO</Button>
+                    </Card.Body>}
 
-                {this.props.displayListDiagnosis && <ListGroup variant="flush">
-                    {this.props.listDiagnosis.map(diagnosis => (
-                        <ListGroup.Item onClick={e => this.handleCardClick(diagnosis)}>{diagnosis}</ListGroup.Item>
-                    ))}
-                </ListGroup>}
-            </Card>
+                    {this.props.displayListDiagnosis &&
+                        <div id="list-diagnosis">
+                            <Card bg="info" text="white">
+                                <Card.Body>Please select the diagnosis that seems to be the most likely correct</Card.Body>
+                            </Card>
+                            <ListGroup variant="flush">
+                                {this.props.listDiagnosis.map(diagnosis => (
+                                    <ListGroup.Item onClick={e => this.handleCardClick(diagnosis)}>{diagnosis}</ListGroup.Item>
+                                ))}
+                            </ListGroup>
+                        </div>}
+                </Card>
+            </div>
         );
     }
 }

@@ -19,7 +19,7 @@ async function getSymtomDiagnosis(req, res, next) {
     const symptom = req.params.symptom;
     if (Object.keys(SYMPTOMS_INFORMATION).includes(symptom)) {
         let val = SYMPTOMS_INFORMATION[symptom];
-        val = Object.keys(val).sort((a, b) => { return val[b] - val[a] })
+        val = Object.keys(val).sort((a, b) => { return val[b] - val[a] });
         res.status(200)
             .json({
                 status: 'success',
@@ -39,7 +39,6 @@ async function getSymtomDiagnosis(req, res, next) {
 function increaseFrequency(req, res, next) {
     const diagnosis = req.body.diagnosis;
     const symptom = req.body.symptom;
-    console.log(diagnosis + " " + symptom);
     if (Object.keys(SYMPTOMS_INFORMATION).includes(symptom)) {
         let val = SYMPTOMS_INFORMATION[symptom];
         if (diagnosis in val) {

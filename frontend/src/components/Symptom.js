@@ -40,7 +40,7 @@ class Symptom extends Component {
         return (
             <Form>
                 <Form.Group controlId="exampleForm.ControlSelect1">
-                    <Form.Label>Example select</Form.Label>
+                    <Form.Label>Please choose a symptom</Form.Label>
                     <Form.Control as="select" onClick={e => this.handleClick(e)}>
                         {
                             this.state.symptoms.map(symptom => (

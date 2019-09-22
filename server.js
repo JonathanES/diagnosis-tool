@@ -26,4 +26,6 @@ app.use(bodyParser.json());
 app.use('/', routes);
 
 console.log("server running on localhost:8080");
+module.exports = app
 app.listen(8080);
+
