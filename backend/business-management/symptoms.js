@@ -44,7 +44,7 @@ async function getSymtomDiagnosis(req, res, next) {
     const symptom = req.params.symptom;
     if (Object.keys(SYMPTOMS_INFORMATION).includes(symptom)) {
         let val = SYMPTOMS_INFORMATION[symptom];
-        tmp = Object.keys(val).sort((a, b) => {
+        val = Object.keys(val).sort((a, b) => {
             return val[b] - val[a]
         });
         res.status(200)
