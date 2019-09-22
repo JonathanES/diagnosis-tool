@@ -6,6 +6,8 @@ let chaiHttp = require('chai-http');
 let should = chai.should();
 let expect = chai.expect;
 
+const constant = require('../../constant/constant');
+
 
 
 chai.use(chaiHttp);
@@ -20,7 +22,7 @@ describe('/GET /', () => {
         .get('/')
         .end((err, res) => {
             expect(err).to.be.null;
-            res.should.have.status(200);
+            res.should.have.status(constant.SUCCESS_STATUS_NUM);
             res.body.should.have.property('message').eql('Connected!');
             console.log(res.body.message);
             done();
@@ -40,8 +42,8 @@ describe('/GET /api/symptoms', () => {
             .get('/api/symptoms')
             .end((err, res) => {
                 expect(err).to.be.null;
-                res.should.have.status(200);
-                res.body.should.have.property('status').eql('success');
+                res.should.have.status(constant.SUCCESS_STATUS_NUM);
+                res.body.should.have.property('status').eql(constant.SUCCESS_STATUS);
                 res.body.should.have.property('data');
                 res.body.should.be.a('object');
                 res.body.should.have.property('data').lengthOf(3)
@@ -67,13 +69,35 @@ describe('/GET /api/diagnosis/:symptom', () => {
             .get('/api/diagnosis/' + symptom)
             .end((err, res) => {
                 expect(err).to.be.null;
-                res.should.have.status(200);
+                res.should.have.status(constant.SUCCESS_STATUS_NUM);
                 res.body.should.be.a('object');
-                res.body.should.have.property('status').eql('success');
+                res.body.should.have.property('status').eql(constant.SUCCESS_STATUS);
                 res.body.should.have.property('data');
                 res.body.should.have.property('data').lengthOf(9)
                 expect(res.body.data).to.be.an('array').that.does.include('common cold');
                 expect(res.body.data).to.be.an('array').that.does.not.include('commoncold');
+                done();
+            });
+    });
+});
+
+
+/**
+ * check if we correctly fail without crashing the server
+ * give a wrong symptom name, should get a status 404/not found 
+ */
+const fail_symptom = 'sorethroat';
+describe('/GET /api/diagnosis/:symptom with WRONG SYMPTOM NAME', () => {
+    it('it should not get any diagonis', (done) => {
+        chai.request(server)
+            .get('/api/diagnosis/' + fail_symptom)
+            .end((err, res) => {
+                expect(err).to.be.null;
+                res.should.have.status(constant.NOT_FOUND_STATUS_NUM);
+                res.body.should.be.a('object');
+                res.body.should.have.property('status').eql(constant.REFUSED_STATUS);
+                res.body.should.have.property('data');
+                res.body.should.have.property('data').lengthOf(0)
                 done();
             });
     });
@@ -97,12 +121,74 @@ describe('/POST, /report', () => {
             .send(report)
             .end((err, res) => {
                 expect(err).to.be.null;
+                res.should.have.status(constant.SUCCESS_STATUS_NUM);
+                res.body.should.have.property('status').eql(constant.SUCCESS_STATUS);
                 expect(Object.values(res.body.data)).to.be.an('array').that.does.include(0);
                 expect(Object.values(res.body.data)).to.be.an('array').that.does.include(1);
                 expect(Object.values(res.body.data)).to.be.an('array').that.does.not.include(2);
                 expect(Object.keys(res.body.data)).to.be.an('array').that.does.include('common cold');
                 expect(Object.keys(res.body.data)).to.be.an('array').that.does.not.include('commoncold');
-                res.should.have.status(200);
+                res.body.should.have.property('data').should.be.a('object');
+                res.body.should.have.property('data')
+                done();
+            });
+    })
+});
+
+/**
+ * check if we correctly fail without crashing the server
+ * give a wrong diagonis name, should get a status 404/not found 
+ */
+const fail_diagonis = "seasonal allegies"
+describe('/POST, /report (Wrong diagnosis name)', () => {
+    it('the frequency should not increase since the diagnosis name is wrong', (done) => {
+        let report = {
+            "diagnosis": fail_diagonis,
+            "symptom": "sore throat"
+        }
+        chai.request(server)
+            .post('/api/report')
+            .type('form')
+            .send(report)
+            .end((err, res) => {
+                expect(err).to.be.null;
+                res.should.have.status(constant.NOT_FOUND_STATUS_NUM);
+                res.body.should.have.property('status').eql(constant.REFUSED_STATUS);
+                expect(Object.values(res.body.data)).to.be.an('array').that.does.not.include(0);
+                expect(Object.values(res.body.data)).to.be.an('array').that.does.not.include(1);
+                expect(Object.values(res.body.data)).to.be.an('array').lengthOf(0);
+                expect(Object.keys(res.body.data)).to.be.an('array').that.does.not.include('common cold');
+                expect(Object.keys(res.body.data)).to.be.an('array').that.does.not.include('commoncold');
+                res.body.should.have.property('data').should.be.a('object');
+                res.body.should.have.property('data')
+                done();
+            });
+    })
+});
+
+/**
+ * check if we correctly fail without crashing the server
+ * give a wrong diagonis name, should get a status 404/not found 
+ */
+describe('/POST /report (wrong symptom name)', () => {
+    it('the frequency should not increase since the symptom name is wrong', (done) => {
+        let report = {
+            "diagnosis": "seasonal allergies",
+            "symptom": fail_symptom
+        }
+        chai.request(server)
+            .post('/api/report')
+            .type('form')
+            .send(report)
+            .end((err, res) => {
+                expect(err).to.be.null;
+                res.should.have.status(constant.NOT_FOUND_STATUS_NUM);
+                res.body.should.have.property('status').eql(constant.REFUSED_STATUS);
+                expect(Object.values(res.body.data)).to.be.an('array').that.does.not.include(0);
+                expect(Object.values(res.body.data)).to.be.an('array').that.does.not.include(1);
+                expect(Object.values(res.body.data)).to.be.an('array').lengthOf(0);
+                expect(Object.keys(res.body.data)).to.be.an('array').that.does.not.include('common cold');
+                expect(Object.keys(res.body.data)).to.be.an('array').that.does.not.include('commoncold');
                 res.body.should.have.property('data').should.be.a('object');
                 res.body.should.have.property('data')
                 done();
