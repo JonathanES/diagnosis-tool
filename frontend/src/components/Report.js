@@ -46,6 +46,7 @@ class Report extends Component {
     render() {
         return (
             <div id="report">
+                <label>Thank you for using our application!</label>
                 <BarChart
                     width={650}
                     height={300}
