@@ -9,6 +9,9 @@ const mapStateToProps = state => ({
     report: state.report.report
 });
 
+/**
+ * display the report and show the frequency of each diagonises through a barplot.
+ */
 class Report extends Component {
     constructor(props) {
         super(props);
@@ -18,9 +21,19 @@ class Report extends Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
+    /**
+     * 
+     * @param {*} e
+     * if the user click on the button start over, it brings him back to the initial page. 
+     */
     handleClick(e) {
         this.props.dispatch({ type: 'USER_RESET'});
     }
+
+    /**
+     * before the component is being displayed, want to create the state data.
+     * this state data contains the information for the barplot.
+     */
     componentDidMount() {
         const report = this.props.report;
         const data = [];

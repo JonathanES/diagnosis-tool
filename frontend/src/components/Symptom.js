@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import Form from 'react-bootstrap/Form';
 
-
+/**
+ * display the different symptoms a user can have
+ */
 class Symptom extends Component {
     constructor(props) {
         super(props);
@@ -14,6 +16,10 @@ class Symptom extends Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
+    /**
+     * before the component is being displayed.
+     * get all the symptoms to be displayed in the select.
+     */
     componentDidMount() {
         fetch('/api/symptoms')
             .then(response => response.json())
@@ -21,6 +27,12 @@ class Symptom extends Component {
                 () => this.props.dispatch({ type: 'USER_SYMPTOM_CHOSEN', symptomChosen: symptoms.data[0] })))
     }
 
+    /**
+     * 
+     * @param {*} event 
+     * when a user has selected a symptom, we retrieve our recommended diagonis
+     * and also the list of diagonis.
+     */
     handleClick(event) {
         const val = event.target.value;
         fetch('/api/diagnosis/' + val)

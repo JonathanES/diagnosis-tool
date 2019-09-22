@@ -5,7 +5,9 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MainPage from './layout/MainPage';
 
-
+/**
+ * Load the main page component
+ */
 function App() {
   return (
     <div className="App">

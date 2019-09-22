@@ -12,6 +12,9 @@ const mapStateToProps = state => ({
     displayListDiagnosis: state.diagnosis.displayListDiagnosis
 });
 
+/**
+ * component to display all the symptoms
+ */
 class Symptom extends Component {
     constructor(props) {
         super(props);
@@ -22,6 +25,13 @@ class Symptom extends Component {
         this.handleClick = this.handleClick.bind(this);
         this.handleCardClick = this.handleCardClick.bind(this);
     }
+    /**
+     * 
+     * @param {*} event 
+     * we check if the diagonis is correct or not.
+     * if the user says no, we display the list of diagonises without the one that the user refused
+     * if the user says yes, we increase the frequency of the diagonise and display the report
+     */
     handleClick(event) {
         const val = event.target.id;
         if (val === "no") {
@@ -50,6 +60,15 @@ class Symptom extends Component {
         console.log(val);
     }
 
+    /**
+     * 
+     * @param {*} diagnosis 
+     * take as param a diagonis
+     * this diagonis is removed from the list of diagonis
+     * the previous recommendation is inserted in the list of diagonis
+     * the new recommended diagonis is the one that has been chosen by the user
+     * the user will then need to confirm his choice or choose another diagnosis
+     */
     handleCardClick(diagnosis) {
         const listDiagnosis = this.props.listDiagnosis;
         const index = listDiagnosis.indexOf(diagnosis);

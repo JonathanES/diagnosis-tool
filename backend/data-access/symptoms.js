@@ -2,6 +2,12 @@ const fs = require('fs');
 const path = require('path')
 const file = path.join(__dirname,"../files/symptoms.csv");
 
+/**
+ * read the csv file
+ * split the string into a list of string
+ * this list of string is then transformed into a list of objects
+ * each object has for key, the symptom and for value the diagonises with an initial frequency of 0.
+ */
 function getAllSymptoms() {
     return new Promise(resolve => {
         fs.readFile(file, "utf8", (err, data) => {
