@@ -28,9 +28,9 @@ class Symptom extends Component {
     /**
      * 
      * @param {*} event 
-     * we check if the diagonis is correct or not.
-     * if the user says no, we display the list of diagonises without the one that the user refused
-     * if the user says yes, we increase the frequency of the diagonise and display the report
+     * we check if the diagnosis is correct or not.
+     * if the user says no, we display the list of diagnosises without the one that the user refused
+     * if the user says yes, we increase the frequency of the diagnosise and display the report
      */
     handleClick(event) {
         const val = event.target.id;
@@ -63,10 +63,10 @@ class Symptom extends Component {
     /**
      * 
      * @param {*} diagnosis 
-     * take as param a diagonis
-     * this diagonis is removed from the list of diagonis
-     * the previous recommendation is inserted in the list of diagonis
-     * the new recommended diagonis is the one that has been chosen by the user
+     * take as param a diagnosis
+     * this diagnosis is removed from the list of diagnosis
+     * the previous recommendation is inserted in the list of diagnosis
+     * the new recommended diagnosis is the one that has been chosen by the user
      * the user will then need to confirm his choice or choose another diagnosis
      */
     handleCardClick(diagnosis) {

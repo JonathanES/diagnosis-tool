@@ -30,8 +30,8 @@ class Symptom extends Component {
     /**
      * 
      * @param {*} event 
-     * when a user has selected a symptom, we retrieve our recommended diagonis
-     * and also the list of diagonis.
+     * when a user has selected a symptom, we retrieve our recommended diagnosis
+     * and also the list of diagnosis.
      */
     handleClick(event) {
         const val = event.target.value;

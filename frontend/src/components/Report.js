@@ -10,7 +10,7 @@ const mapStateToProps = state => ({
 });
 
 /**
- * display the report and show the frequency of each diagonises through a barplot.
+ * display the report and show the frequency of each diagnosises through a barplot.
  */
 class Report extends Component {
     constructor(props) {

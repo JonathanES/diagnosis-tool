@@ -57,7 +57,7 @@ describe('/GET /api/symptoms', () => {
 /**
  * check if we can get all the diagnosis for a specific symptom, which it is here through our API.
  * We check if we get a status 200 and that we don't get an error.
- * Then we check if our data is an array and that it has a length of 9 since we know that there are only 9 diagonises.
+ * Then we check if our data is an array and that it has a length of 9 since we know that there are only 9 diagnosises.
  * Then we check if we have all the expected value and that we don't have any unexpected ones.
  */
 const symptom = 'sore throat';
@@ -80,7 +80,7 @@ describe('/GET /api/diagnosis/:symptom', () => {
 });
 
 /**
- * check if we can get increase the frequency of a diagonis and if we can get all the diagonise + frequency back for a specific symptom.
+ * check if we can get increase the frequency of a diagnosis and if we can get all the diagnosise + frequency back for a specific symptom.
  * We check if we get a status 200 and that we don't get an error.
  * Then we check if our data is an object and that we have some values of 0 and 1.
  * Then we check if we have an expected key and that we don't have an unexpected ones.

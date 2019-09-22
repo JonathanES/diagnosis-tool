@@ -7,7 +7,7 @@ let SYMPTOMS_INFORMATION = {};
  * instantiate the global variable SYMPTOMS_INFORMATION
  * This global variable contains as key the symptoms.
  * The symptoms/keys have for values an object.
- * This object contains all the diagonises and a frequency, initially at 0.
+ * This object contains all the diagnosises and a frequency, initially at 0.
  */
 async function getAllSymptomsInformation() {
     SYMPTOMS_INFORMATION = await bmSymptoms.getAllSymptoms();
@@ -38,7 +38,7 @@ async function getAllSymptoms(req, res, next) {
  * 
  * Has for param a symptom name
  * We check if they symptom that has been given by the user exist in our global variable
- * If it does, we return the diagonises sorted from the most relevant to the least relevant.
+ * If it does, we return the diagnosises sorted from the most relevant to the least relevant.
  */
 async function getSymtomDiagnosis(req, res, next) {
     const symptom = req.params.symptom;
@@ -69,10 +69,10 @@ async function getSymtomDiagnosis(req, res, next) {
  * @param {*} res 
  * @param {*} next 
  * 
- * When a user has approved of a diagonises for a symptom, it's frequency is increased here.
- * Take the symptom in the body. This symptom is used to get all the diagonises of the symptom the user had.
- * When we get all the symptoms, we increase the frequency of the specific diagonis
- * We return the diagonises and their frequencies.
+ * When a user has approved of a diagnosises for a symptom, it's frequency is increased here.
+ * Take the symptom in the body. This symptom is used to get all the diagnosises of the symptom the user had.
+ * When we get all the symptoms, we increase the frequency of the specific diagnosis
+ * We return the diagnosises and their frequencies.
  * This will let us have the graph that are being displayed on the frontend.
  */
 function increaseFrequency(req, res, next) {
