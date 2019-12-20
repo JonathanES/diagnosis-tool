@@ -1,0 +1,32 @@
+{
+  "name": "diagnosis-tool",
+  "version": "1.0.0",
+  "description": "1. Clone\r 2. Install the dependencies - `npm install` at the root, `npm install` at the root of the backend directory, `npm install` at the root of the frontend direcory\r 3. `npm run dev` to launch the frontend and backend at the same time",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha tests/**/*.js --exit",
+    "start": "node server.js",
+    "backend": "node server.js",
+    "frontend": "cd ./frontend && npm start",
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JonathanES/diagnosis-tool.git"
+  },
+  "author": "Jonathan Espiard",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JonathanES/diagnosis-tool/issues"
+  },
+  "homepage": "https://github.com/JonathanES/diagnosis-tool#readme",
+  "dependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "concurrently": "^4.1.2",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mocha": "^6.2.0",
+    "swagger-ui-express": "^4.1.1"
+  }
+}

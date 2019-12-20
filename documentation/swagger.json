@@ -1,0 +1,151 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Diagnosis tool API documentation",
+        "description": "Diagnosis tool API documentation",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "host": "localhost:8080",
+    "basePath": "/api/",
+    "tags": [
+        {
+            "name": "Symptoms",
+            "description": "API for the symptoms"
+        },
+        {
+            "name": "Report",
+            "description": "API for the report"
+        },
+        {
+            "name": "Diagnosis",
+            "description": "API for the diagnosis"
+        }
+    ],
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/report": {
+            "post": {
+                "tags": [
+                    "Report"
+                ],
+                "description": "Create a report",
+                "parameters": [
+                    {
+                        "name": "diagnosis",
+                        "in": "body",
+                        "description": "Diagnosis that will have it's frequency increase by 1",
+                        "schema": {
+                            "$ref": "#/definitions/Diagnosis"
+                        }
+                    },
+                    {
+                        "name": "symptom",
+                        "in": "body",
+                        "description": "The symtom parameter is used to be able to get all the diagnosis of a symptom. SYMPTOMS_INFORMATION contains all the symptoms. Each symptoms has an object that has for key a diagnosis and for value the frequency that this diagnosis has been selected.",
+                        "schema": {
+                            "$ref": "#/definitions/Symptom"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "status": "success",
+                        "message": "Send back report",
+                        "schema": {
+                            "$ref": "#/definitions/ListOfDiagnosisFrequency"
+                        }
+                    }
+                }
+            }
+        },
+        "/symptoms": {
+            "get": {
+                "tags": [
+                    "Symptoms"
+                ],
+                "summary": "Get all symptoms",
+                "responses": {
+                    "200": {
+                        "status": "success",
+                        "message": "Retrieved all symptoms",
+                        "schema": {
+                            "$ref": "#/definitions/Symptoms"
+                        }
+                    }
+                }
+            }
+        },
+        "/diagnosis/{symptom}": {
+            "parameters": [
+                {
+                    "name": "symptom",
+                    "in": "path",
+                    "required": true,
+                    "description": "Name of the symptom where we want to retrieve all the diagnosises.",
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Diagnosis"
+                ],
+                "summary": "Get symptom with symptom name",
+                "responses": {
+                    "200": {
+                        "status": "success",
+                        "message": "Retrieved all diagnosis",
+                        "schema": {
+                            "$ref": "#/definitions/ListOfDiagnosis"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Diagnosis": {
+            "type": "string"
+        },
+        "Symptom": {
+            "type": "string"
+        },
+        "ListOfDiagnosisFrequency": {
+            "type": "object",
+            "properties": {
+                "diagnosis": {
+                    "type": "string"
+                },
+                "frequency": {
+                    "type": "integer"
+                }
+            }
+        },
+        "Symptoms": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "ListOfDiagnosis": {
+            "type": "array",
+            "items":{
+                "type":"string"
+            }
+        }
+    }
+}
